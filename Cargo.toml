@@ -1,0 +1,9 @@
+[package]
+name = "margesimpson"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.50", features = ["derive"] }
+quiet_panics = "0.1.2"
+rust-ini = "0.21.3"
