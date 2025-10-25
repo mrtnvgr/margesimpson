@@ -70,7 +70,9 @@ fn main() {
 
     let args = Args::parse();
 
-    assert!(args.target.exists(), "Target file does not exist");
+    if !args.target.exists() {
+        std::fs::File::create(&args.target).expect("Failed to create target file");
+    }
 
     for patch in &args.patches {
         assert!(patch.exists(), "{} doesn't exist", patch.display());
