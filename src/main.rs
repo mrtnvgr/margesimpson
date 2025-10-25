@@ -43,6 +43,10 @@ impl File {
     fn apply(&mut self, patch: &Self) {
         self.data.apply(&patch.data);
     }
+
+    fn save(self) {
+        self.data.save(self.path);
+    }
 }
 
 impl Data {
@@ -62,6 +66,14 @@ impl Data {
                 target.with_section(sec).set(k, v);
             }
         }
+    }
+
+    fn save(self, path: PathBuf) {
+        let result = match self {
+            Self::Ini(ini) => ini.write_to_file(path),
+        };
+
+        result.expect("Failed to save target");
     }
 }
 
@@ -95,4 +107,6 @@ fn main() {
     for patch in patches {
         target.apply(&patch);
     }
+
+    target.save();
 }
